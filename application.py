@@ -5,10 +5,10 @@ import datetime
 application=Flask(__name__)
 app = application
 jd=mysql.connector.connect(
-        host='cvportal.cc4euyfhpe3u.us-east-1.rds.amazonaws.com',
-        user='root',
+        host='cv-portal.cc4euyfhpe3u.us-east-1.rds.amazonaws.com',
+        user='admin',
         password='Dheeru6132',
-        database='register'
+        database='registration'
     )
 mycursor = jd.cursor()
 data_status = {"responseStatus": 0, "results": ""}
