@@ -299,6 +299,43 @@ def getuser():
         data_status["responseStatus"] = 0
         data_status["result"] = "Data not available"
         return data_status
+  
+
+@application.route('/postevent', methods=['POST', 'GET'])
+def event():
+    global data_status
+    if request.method == 'POST':
+        data_status = {"responseStatus": 0, "results": ""}
+        title = request.json['title']
+        event = request.json['event']
+        start_date = request.json['start_date']
+        end_date = request.json['end_date']
+        mycursor.execute("insert into event values(%s,%s,%s,%s,%s)",(None, title, event, start_date, end_date))
+        jd.commit()
+        data_status["responseStatus"] = 1
+        data_status["results"] = "success"
+        return data_status
+    else:
+        data_status["responseStatus"] = 0
+        data_status["result"] = "Required fields are missing"
+        return data_status
+
+    
+@application.route('/getevent', methods=['POST', 'GET'])
+def getevent():
+    global data_status
+    if request.method == 'GET':
+        data_status = {"responseStatus": 0, "results": ""}
+        mycursor.execute("select * from event")
+        jd = mycursor.fetchall()
+        data_status["responseStatus"] = 1
+        data_status["details"] = jd
+        data_status["results"] = "success"
+        return data_status
+    else:
+        data_status["responseStatus"] = 0
+        data_status["result"] = "Data not available"
+        return data_status
 
 
 if __name__ == "__main__":
